@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zaza's Steakhouse & Grill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      colors:{
+        gold:'#c9a227',goldl:'#e8c45a',cream:'#f5ead8',
+        char:'#1a1612',dark:'#221e19',blk:'#0a0805',
+        bronze:'#8b6914',ember:'#e07020',dim:'#9b8c72'
+      },
+      fontFamily:{serif:['Cormorant Garamond','serif'],sans:['Outfit','sans-serif']},
+      boxShadow:{
+        gold:'0 0 40px rgba(201,162,39,0.18)',
+        card:'0 8px 32px rgba(0,0,0,0.5),0 2px 8px rgba(0,0,0,0.3)',
+        inner3d:'inset 0 1px 0 rgba(255,255,255,0.08),inset 0 -1px 0 rgba(0,0,0,0.4)'
+      }
+    }
+  }
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0a0805;color:#f5ead8;font-family:'Outfit',sans-serif;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
+
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+.glass-gold{background:rgba(201,162,39,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(201,162,39,0.35)}
+.glass-dark{background:rgba(10,8,5,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(201,162,39,0.15)}
+
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#c9a227,#e8c45a,#c9a227);background-size:200% auto;color:#0a0805;font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 2rem;border-radius:999px;border:none;cursor:pointer;text-decoration:none;transition:all .3s ease;box-shadow:0 4px 24px rgba(201,162,39,0.35),inset 0 1px 0 rgba(255,255,255,0.3),0 1px 3px rgba(0,0,0,0.5)}
+.btn-gold:hover{background-position:right center;transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,162,39,0.5),inset 0 1px 0 rgba(255,255,255,0.3)}
+
+.btn-glass{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.07);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#f5ead8;font-family:'Outfit',sans-serif;font-weight:500;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.18);cursor:pointer;text-decoration:none;transition:all .3s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,0.12),0 4px 16px rgba(0,0,0,0.3)}
+.btn-glass:hover{background:rgba(255,255,255,0.12);border-color:rgba(201,162,39,0.5);color:#e8c45a;transform:translateY(-2px)}
+
+.card-3d{background:linear-gradient(145deg,rgba(34,30,25,0.9),rgba(22,18,13,0.95));border:1px solid rgba(201,162,39,0.15);border-top:1px solid rgba(255,255,255,0.07);box-shadow:0 8px 32px rgba(0,0,0,0.6),0 2px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.card-3d:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 20px 48px rgba(0,0,0,0.7),0 0 40px rgba(201,162,39,0.12),inset 0 1px 0 rgba(255,255,255,0.08);border-color:rgba(201,162,39,0.35)}
+
+.ticker-wrap{overflow:hidden;background:linear-gradient(90deg,#c9a227,#a07a10,#c9a227)}
+.ticker-inner{display:flex;gap:3.5rem;animation:ticker 22s linear infinite;width:max-content}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hero-glow{position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);width:130%;height:60%;background:radial-gradient(ellipse at 50% 100%,rgba(224,112,32,.3) 0%,rgba(201,162,39,.08) 40%,transparent 70%);pointer-events:none}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 20%,rgba(10,8,5,.6) 100%)}
+
+.nav-link{color:#9b8c72;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:color .25s;padding:.3rem 0;position:relative}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:#c9a227;transform:scaleX(0);transition:transform .25s}
+.nav-link:hover{color:#c9a227}
+.nav-link:hover::after{transform:scaleX(1)}
+
+.section-eyebrow{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.8rem}
+.gold-line{width:48px;height:2px;background:linear-gradient(to right,#c9a227,#e8c45a);margin:.8rem 0 1.6rem;border-radius:1px}
+
+.tab-btn{font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:.5rem 1.2rem;border-radius:999px;border:1px solid rgba(201,162,39,.25);color:#9b8c72;background:transparent;cursor:pointer;transition:all .25s;white-space:nowrap}
+.tab-btn.active,.tab-btn:hover{background:linear-gradient(135deg,#c9a227,#e8c45a);color:#0a0805;border-color:transparent;box-shadow:0 4px 16px rgba(201,162,39,.3)}
+
+.story-ring{width:68px;height:68px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#c9a227,#e8c45a,#c9a227);cursor:pointer;transition:transform .2s;flex-shrink:0}
+.story-ring:hover{transform:scale(1.08)}
+.story-inner{width:100%;height:100%;border-radius:50%;background:linear-gradient(145deg,#2d1800,#1a0e00);display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:2px solid #0a0805}
+
+.spec-card{background:linear-gradient(145deg,rgba(26,22,18,.95),rgba(18,14,10,.98));border:1px solid rgba(201,162,39,.15);border-top:1px solid rgba(255,255,255,.06);box-shadow:0 4px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);padding:2rem;position:relative;overflow:hidden;transition:all .3s}
+.spec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#c9a227,transparent)}
+.spec-card:hover{transform:translateY(-4px);border-color:rgba(201,162,39,.35);box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 30px rgba(201,162,39,.1),inset 0 1px 0 rgba(255,255,255,.06)}
+
+.test-card-inner{width:330px;flex-shrink:0;background:linear-gradient(145deg,rgba(26,22,18,.9),rgba(16,13,9,.95));border:1px solid rgba(201,162,39,.12);border-top:1px solid rgba(255,255,255,.06);padding:1.8rem;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)}
+
+.scroll-dot{width:6px;height:6px;border-radius:50%;background:#c9a227;animation:scrollBounce 1.5s ease-in-out infinite;margin:0 auto}
+.scroll-track{width:1px;height:36px;background:linear-gradient(to bottom,#c9a227,transparent);margin:6px auto 0}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(6px);opacity:.4}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.anim-0{opacity:0;animation:fadeUp .8s .2s forwards}
+.anim-1{opacity:0;animation:fadeUp .8s .4s forwards}
+.anim-2{opacity:0;animation:fadeUp .8s .6s forwards}
+.anim-3{opacity:0;animation:fadeUp .8s .85s forwards}
+.anim-4{opacity:0;animation:fadeUp .8s 1.05s forwards}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+.hours-row{display:flex;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid rgba(201,162,39,.1);font-size:.88rem}
+.hours-row:last-child{border-bottom:none}
+
+input,select{background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.2);color:#f5ead8;padding:.8rem 1rem;font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;width:100%;border-radius:8px;-webkit-appearance:none;appearance:none}
+input:focus,select:focus{border-color:#c9a227;background:rgba(201,162,39,.05)}
+input::placeholder{color:#9b8c72}
+select option{background:#1a1612;color:#f5ead8}
+label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.45rem}
+
+@media(max-width:768px){
+  .desktop-nav{display:none!important}
+  .mobile-ham{display:flex!important}
+  .about-grid{grid-template-columns:1fr!important}
+  .res-layout{grid-template-columns:1fr!important;gap:2.5rem!important}
+  .spec-grid{grid-template-columns:1fr!important}
+  .contact-grid{grid-template-columns:1fr!important}
+  .footer-grid{grid-template-columns:1fr 1fr!important;gap:2rem!important}
+  .footer-brand{grid-column:span 2!important}
+  .gallery-grid-inner{grid-template-columns:1fr 1fr!important}
+  .g-span2{grid-column:span 2!important;grid-row:span 1!important;aspect-ratio:16/9!important}
+}
+@media(min-width:769px){
+  .mobile-ham{display:none!important}
+}
+@media(min-width:1400px){
+  .inner{max-width:1300px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="padding:1.4rem 2.5rem">
+  <div class="flex items-center justify-between max-w-screen-xl mx-auto">
+    <a href="#home" class="font-serif text-gold font-bold" style="font-size:1.5rem;letter-spacing:.04em;text-decoration:none">Zaza's<span class="text-cream font-normal"> & Grill</span></a>
+    <ul class="desktop-nav flex items-center gap-8" style="list-style:none">
+      <li><a href="#menu" class="nav-link">Menu</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#specials" class="nav-link">Specials</a></li>
+      <li><a href="#reservations" class="nav-link">Reservations</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="#reservations" class="desktop-nav btn-gold" style="font-size:.75rem;padding:.65rem 1.5rem">Reserve a Table</a>
+    <button class="mobile-ham flex-col gap-1.5 cursor-pointer bg-transparent border-none p-2 z-50 relative" id="hamBtn" aria-label="Open navigation menu" style="display:flex">
+      <span id="h1" class="block w-6 bg-cream transition-all duration-300" style="height:1.5px"></span>
+      <span id="h2" class="block w-6 bg-cream transition-all duration-300" style="height:1.5px"></span>
+      <span id="h3" class="block w-6 bg-cream transition-all duration-300" style="height:1.5px"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div id="mobileMenu" class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-400" style="background:rgba(10,8,5,.97);backdrop-filter:blur(24px);transform:translateX(100%);-webkit-backdrop-filter:blur(24px)">
+  <a href="#menu" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">Menu</a>
+  <a href="#about" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">About</a>
+  <a href="#specials" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">Specials</a>
+  <a href="#reservations" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">Reserve</a>
+  <a href="#gallery" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">Gallery</a>
+  <a href="#contact" onclick="closeMob()" class="font-serif text-cream hover:text-gold transition-colors duration-300 no-underline" style="font-size:2.8rem;font-weight:700">Contact</a>
+  <div style="margin-top:1.5rem">
+    <a href="tel:8683554500" class="btn-gold" style="font-size:.78rem">(868) 355-4500</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home" class="relative flex items-center justify-center overflow-hidden" style="min-height:100vh;background:radial-gradient(ellipse 90% 70% at 50% 65%,#3d1a00 0%,#1a0d00 45%,#0a0805 100%)">
+  <div class="hero-vignette"></div>
+  <div class="hero-glow"></div>
+  <div class="relative z-10 text-center px-6 py-32">
+    <p class="anim-0 section-eyebrow" style="margin-bottom:1.5rem">Est. La Romain, Trinidad &amp; Tobago</p>
+    <h1 class="anim-1 font-serif font-bold text-cream" style="font-size:clamp(3.5rem,10vw,8.5rem);line-height:.88;letter-spacing:-.01em">Fire-Kissed<br><span style="color:#c9a227;font-style:italic">Perfection</span></h1>
+    <p class="anim-2 text-dim font-light mx-auto" style="max-width:480px;margin-top:1.8rem;margin-bottom:2.5rem;line-height:1.75;font-size:1.05rem">Where premium cuts meet Caribbean soul. Trinidad's finest steakhouse experience, crafted with passion in every flame-kissed plate.</p>
+    <div class="anim-3 flex flex-wrap gap-4 justify-center">
+      <a href="#reservations" class="btn-gold">Reserve Your Table</a>
+      <a href="#menu" class="btn-glass">View Full Menu</a>
+    </div>
+    <div class="anim-4 flex flex-col items-center mt-14 cursor-pointer" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#9b8c72;margin-bottom:8px">Explore</span>
+      <div class="scroll-dot"></div>
+      <div class="scroll-track"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap py-2.5 overflow-hidden">
+  <div class="ticker-inner items-center" style="display:flex">
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Premium Steaks</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Halaal Certified</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Bajan Fish Fry</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">La Romain, Trinidad</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Open Daily 10:30am</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">4.2★ Google Reviews</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Premium Steaks</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Halaal Certified</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Bajan Fish Fry</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">La Romain, Trinidad</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">Open Daily 10:30am</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+    <span style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#0a0805;font-weight:700">4.2★ Google Reviews</span><span style="color:#5a3d00;padding:0 .5rem">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="background:#1a1612;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="about-grid reveal grid gap-16 items-center" style="grid-template-columns:1fr 1fr">
+      <div class="relative">
+        <div class="card-3d overflow-hidden" style="aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#3d2200,#1a1000)">
+          <span style="font-size:10rem;opacity:.12">🥩</span>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to top,rgba(26,22,18,1),transparent)"></div>
+        </div>
+        <div class="glass-gold absolute" style="bottom:-1.5rem;right:-1.5rem;padding:1.5rem 1.8rem;text-align:center;border-radius:4px">
+          <strong class="block font-serif" style="font-size:2rem;color:#c9a227">4.2★</strong>
+          <span style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#f5ead8;font-weight:600">436 Reviews</span>
+        </div>
+      </div>
+      <div>
+        <span class="section-eyebrow">Our Story</span>
+        <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.05;margin-bottom:.5rem">A Southern Trinidad<br>Institution</h2>
+        <div class="gold-line"></div>
+        <p class="text-dim leading-relaxed mb-5" style="font-size:.95rem">Nestled along the Southern Main Road in La Romain, Zaza's has been the go-to destination for premium grilled dining in South Trinidad. What started as a passion for perfectly cooked meats has grown into one of the region's most beloved dining experiences.</p>
+        <p class="text-dim leading-relaxed mb-5" style="font-size:.95rem">Every cut is sourced with care, every sauce crafted in-house, and every dish prepared to order. From our signature tenderloin to our celebrated Bajan Fish Fry, each plate tells a story of quality and love.</p>
+        <p class="text-dim leading-relaxed mb-8" style="font-size:.95rem">A proudly Halaal establishment — family-friendly, no alcohol, no smoking — where the whole community comes together around the grill.</p>
+        <div class="grid grid-cols-3 gap-4">
+          <div style="border-top:1px solid rgba(201,162,39,.3);padding-top:1rem">
+            <strong class="block font-serif text-gold" style="font-size:1.8rem">10+</strong>
+            <span style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#9b8c72">Years Serving</span>
+          </div>
+          <div style="border-top:1px solid rgba(201,162,39,.3);padding-top:1rem">
+            <strong class="block font-serif text-gold" style="font-size:1.8rem">436</strong>
+            <span style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#9b8c72">Reviews</span>
+          </div>
+          <div style="border-top:1px solid rgba(201,162,39,.3);padding-top:1rem">
+            <strong class="block font-serif text-gold" style="font-size:1.8rem">100%</strong>
+            <span style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#9b8c72">Halaal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" style="background:#0a0805;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="reveal text-center mb-14">
+      <span class="section-eyebrow">Off The Grill</span>
+      <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem)">The Menu</h2>
+      <div class="gold-line mx-auto"></div>
+    </div>
+    <div class="flex flex-wrap gap-2 justify-center mb-10 reveal" id="menuTabs">
+      <button class="tab-btn active" data-cat="steaks">Signature Steaks</button>
+      <button class="tab-btn" data-cat="seafood">Bajan Fish Fry</button>
+      <button class="tab-btn" data-cat="burgers">Burgers</button>
+      <button class="tab-btn" data-cat="chicken">Chicken &amp; Wings</button>
+      <button class="tab-btn" data-cat="pasta">Pasta</button>
+      <button class="tab-btn" data-cat="desserts">Desserts &amp; Drinks</button>
+    </div>
+    <div class="reveal grid gap-5 menu-grid-inner" id="menuGrid" style="grid-template-columns:repeat(auto-fill,minmax(290px,1fr))"></div>
+  </div>
+</section>
+
+<!-- SPECIALS -->
+<section id="specials" style="background:#1a1612;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="reveal text-center mb-14">
+      <span class="section-eyebrow">Limited Time</span>
+      <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem)">Weekly Specials</h2>
+      <div class="gold-line mx-auto"></div>
+    </div>
+    <div class="spec-grid reveal grid gap-5" style="grid-template-columns:repeat(3,1fr)">
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Mon – Thu</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Lunch Combo Deal</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Any burger + regular side + soft drink. Perfect midday fuel at a great price.</p><span class="btn-gold" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">Save 15%</span></div>
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Friday Night</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Ribeye Night</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Famous Ribeye with sautéed mushrooms and your choice of premium side. The weekend starts here.</p><span class="btn-gold" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">Signature Special</span></div>
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Weekend Exclusive</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Family Feast</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Mix and match — steaks, fish, wings, and sides for the whole table.</p><span class="btn-glass" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">Call to Book</span></div>
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Always Available</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Bajan Fish Special</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Fresh mahi mahi, snapper, or marlin — Bajan-seasoned and grilled golden.</p><span class="btn-gold" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">Chef's Pick</span></div>
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Kids Menu</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Little Ones Eat Too</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Nuggets, pizza, hot dogs and more. Because family dining means everyone's happy.</p><span class="btn-gold" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">From $25</span></div>
+      <div class="spec-card"><span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;display:block;margin-bottom:.6rem">Every Visit</span><h3 class="font-serif" style="font-size:1.35rem;margin-bottom:.6rem;color:#f5ead8">Dessert + Shake Combo</h3><p style="font-size:.85rem;color:#9b8c72;line-height:1.65;margin-bottom:1.2rem">Pair any dessert with a milkshake or smoothie. End every visit on a high note.</p><span class="btn-glass" style="font-size:.7rem;padding:.45rem 1.1rem;cursor:default">Sweet Finish</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="background:#0a0805;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="reveal text-center mb-10">
+      <span class="section-eyebrow">The Experience</span>
+      <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem)">Gallery</h2>
+      <div class="gold-line mx-auto"></div>
+    </div>
+    <div class="flex gap-4 justify-center mb-10 overflow-x-auto pb-2 reveal" style="scrollbar-width:none">
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🥩</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">Steaks</span></div>
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🐟</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">Seafood</span></div>
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🍔</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">Burgers</span></div>
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🍰</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">Desserts</span></div>
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🍹</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">Drinks</span></div>
+      <div class="flex flex-col items-center gap-1"><div class="story-ring"><div class="story-inner">🔥</div></div><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9b8c72">The Grill</span></div>
+    </div>
+    <div class="gallery-grid-inner reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <div class="g-span2 overflow-hidden cursor-pointer group relative card-3d" style="grid-column:span 2;grid-row:span 2;aspect-ratio:1"><div style="width:100%;height:100%;min-height:220px;background:linear-gradient(145deg,#3d2200,#1a0e00);display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:.18;transition:transform .5s" class="group-hover:scale-105 transition-transform">🥩</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4" style="background:linear-gradient(to top,rgba(10,8,5,.85) 0%,transparent 60%)"><span style="font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase">Signature Ribeye</span></div></div>
+      <div class="overflow-hidden cursor-pointer group relative card-3d" style="aspect-ratio:1"><div style="width:100%;height:100%;min-height:100px;background:linear-gradient(145deg,#2a1000,#150a00);display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.2;transition:transform .5s" class="group-hover:scale-110">🔥</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3" style="background:linear-gradient(to top,rgba(10,8,5,.85),transparent 60%)"><span style="font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase">Live Grill</span></div></div>
+      <div class="overflow-hidden cursor-pointer group relative card-3d" style="aspect-ratio:1"><div style="width:100%;height:100%;min-height:100px;background:linear-gradient(145deg,#001a14,#000e0a);display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.2;transition:transform .5s" class="group-hover:scale-110">🐟</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3" style="background:linear-gradient(to top,rgba(10,8,5,.85),transparent 60%)"><span style="font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase">Mahi Mahi</span></div></div>
+      <div class="overflow-hidden cursor-pointer group relative card-3d" style="grid-column:span 2;aspect-ratio:2"><div style="width:100%;height:100%;min-height:100px;background:linear-gradient(145deg,#1a1200,#0d0900);display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.18;transition:transform .5s" class="group-hover:scale-105">🍽️</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4" style="background:linear-gradient(to top,rgba(10,8,5,.85),transparent 60%)"><span style="font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase">Dinner Setting</span></div></div>
+      <div class="overflow-hidden cursor-pointer group relative card-3d" style="aspect-ratio:1"><div style="width:100%;height:100%;min-height:100px;background:linear-gradient(145deg,#1a0e00,#100800);display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.2;transition:transform .5s" class="group-hover:scale-110">🍔</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3" style="background:linear-gradient(to top,rgba(10,8,5,.85),transparent 60%)"><span style="font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase">Zaza's Burger</span></div></div>
+      <div class="overflow-hidden cursor-pointer group relative card-3d" style="aspect-ratio:1"><div style="width:100%;height:100%;min-height:100px;background:linear-gradient(145deg,#0d1a14,#060e0a);display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.2;transition:transform .5s" class="group-hover:scale-110">🍹</div><div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3" style="background:linear-gradient(to top,rgba(10,8,5,.85),transparent 60%)"><span style="font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase">Tropical Shakes</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATIONS -->
+<section id="reservations" style="background:linear-gradient(135deg,#1a1612,#0f0d0b);padding:7rem 0;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-30%;right:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.04),transparent 70%);pointer-events:none"></div>
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="res-layout reveal grid gap-16 items-start" style="grid-template-columns:1fr 1fr">
+      <div>
+        <span class="section-eyebrow">Book Ahead</span>
+        <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.05;margin-bottom:.5rem">Reserve<br>Your Table</h2>
+        <div class="gold-line"></div>
+        <p class="text-dim leading-relaxed mb-8" style="font-size:.95rem">For the best experience, we recommend calling ahead — especially for groups and weekend evenings. We'll have your table set and your favourite cuts ready.</p>
+        <div class="flex flex-col gap-4">
+          <div class="glass-dark flex items-start gap-4" style="padding:1.1rem 1.3rem;border-radius:10px"><span style="font-size:1.3rem;flex-shrink:0;margin-top:2px">📍</span><div><strong style="display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.25rem">Location</strong><span style="font-size:.88rem;color:#9b8c72;line-height:1.6">159 Southern Main Rd, La Romain<br>San Fernando, Trinidad</span></div></div>
+          <div class="glass-dark flex items-start gap-4" style="padding:1.1rem 1.3rem;border-radius:10px"><span style="font-size:1.3rem;flex-shrink:0;margin-top:2px">📞</span><div><strong style="display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.25rem">Phone</strong><a href="tel:8683554500" style="font-size:.88rem;color:#9b8c72;text-decoration:none">(868) 355-4500</a></div></div>
+          <div class="glass-dark flex items-start gap-4" style="padding:1.1rem 1.3rem;border-radius:10px"><span style="font-size:1.3rem;flex-shrink:0;margin-top:2px">⏰</span><div><strong style="display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.25rem">Hours</strong><span style="font-size:.88rem;color:#9b8c72;line-height:1.6">Mon–Thu 10:30am–9pm<br>Fri–Sat 10:30am–10pm · Sun 10:30am–8pm</span></div></div>
+        </div>
+      </div>
+      <div class="glass-dark" style="padding:2.5rem;border-radius:16px">
+        <form id="resForm" onsubmit="handleRes(event)">
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div><label>First Name</label><input type="text" placeholder="Your name" required></div>
+            <div><label>Phone</label><input type="tel" placeholder="(868) 000-0000" required></div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div><label>Date</label><input type="date" required></div>
+            <div><label>Time</label><input type="time" required></div>
+          </div>
+          <div class="mb-4"><label>Number of Guests</label><select required><option value="">Select guests</option><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5 Guests</option><option>6+ Guests (call us)</option></select></div>
+          <div class="mb-6"><label>Special Requests</label><input type="text" placeholder="Allergies, celebrations, etc."></div>
+          <button type="submit" class="btn-gold w-full" style="width:100%;justify-content:center">Confirm Reservation</button>
+        </form>
+        <div id="resConfirm" class="text-center py-8" style="display:none">
+          <div style="font-size:2.5rem;margin-bottom:.8rem;color:#c9a227">✓</div>
+          <h3 class="font-serif text-gold" style="font-size:1.5rem;margin-bottom:.5rem">Table Secured</h3>
+          <p style="font-size:.88rem;color:#9b8c72">We'll see you soon. Call (868) 355-4500 to confirm.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" style="background:#0a0805;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="reveal text-center mb-12">
+      <span class="section-eyebrow">What Guests Say</span>
+      <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem)">Stories From Our Table</h2>
+      <div class="gold-line mx-auto"></div>
+    </div>
+  </div>
+  <div style="overflow:hidden">
+    <div class="flex gap-5" id="testTrack" style="animation:ticker 32s linear infinite;width:max-content"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:#1a1612;padding:7rem 0">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="reveal mb-12">
+      <span class="section-eyebrow">Find Us</span>
+      <h2 class="font-serif font-bold text-cream" style="font-size:clamp(2.2rem,4vw,3.5rem)">Come Visit</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="contact-grid reveal grid gap-12" style="grid-template-columns:1fr 1fr">
+      <div>
+        <h3 class="font-serif text-gold mb-5" style="font-size:1.1rem">Opening Hours</h3>
+        <div class="hours-row"><span style="color:#9b8c72">Monday – Thursday</span><span class="text-gold font-medium">10:30am – 9:00pm</span></div>
+        <div class="hours-row"><span style="color:#9b8c72">Friday – Saturday</span><span class="text-gold font-medium">10:30am – 10:00pm</span></div>
+        <div class="hours-row"><span style="color:#9b8c72">Sunday</span><span class="text-gold font-medium">10:30am – 8:00pm</span></div>
+        <div class="card-3d mt-6 flex items-center justify-center" style="height:220px;border-radius:12px;background:linear-gradient(145deg,#1a1200,#0d0900)">
+          <div class="text-center">
+            <div style="font-size:2.5rem;margin-bottom:.6rem">📍</div>
+            <p style="font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#9b8c72">159 Southern Main Rd</p>
+            <p style="font-size:.72rem;color:#9b8c72;margin-top:.25rem">La Romain, San Fernando, Trinidad</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-serif text-gold mb-5" style="font-size:1.1rem">Get In Touch</h3>
+        <div class="flex flex-col gap-4 mb-6">
+          <div class="glass-dark flex items-start gap-3" style="padding:1rem 1.2rem;border-radius:10px"><span style="font-size:1.2rem;flex-shrink:0">📍</span><div><strong style="display:block;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.2rem">Address</strong><span style="font-size:.88rem;color:#9b8c72;line-height:1.6">159 Southern Main Rd, La Romain<br>San Fernando, Trinidad &amp; Tobago</span></div></div>
+          <div class="glass-dark flex items-start gap-3" style="padding:1rem 1.2rem;border-radius:10px"><span style="font-size:1.2rem;flex-shrink:0">📞</span><div><strong style="display:block;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.2rem">Phone</strong><a href="tel:8683554500" style="font-size:.88rem;color:#9b8c72;text-decoration:none">(868) 355-4500</a></div></div>
+          <div class="glass-dark flex items-start gap-3" style="padding:1rem 1.2rem;border-radius:10px"><span style="font-size:1.2rem;flex-shrink:0">🔴</span><div><strong style="display:block;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#c9a227;margin-bottom:.2rem">Status</strong><span id="openStatus" style="font-size:.88rem">Checking...</span></div></div>
+        </div>
+        <a href="https://wa.me/8683554500" class="btn-gold mb-4" style="background:linear-gradient(135deg,#25d366,#1da851);text-decoration:none;display:inline-flex;gap:.6rem" target="_blank"><span>💬</span>Chat on WhatsApp</a>
+        <div class="flex gap-3 mt-4">
+          <a href="#" class="glass flex items-center justify-center hover:border-gold transition-colors" style="width:42px;height:42px;border-radius:50%;font-size:1rem;text-decoration:none" title="Instagram">📸</a>
+          <a href="#" class="glass flex items-center justify-center hover:border-gold transition-colors" style="width:42px;height:42px;border-radius:50%;font-size:1rem;text-decoration:none" title="Facebook">📘</a>
+          <a href="https://wa.me/8683554500" class="glass flex items-center justify-center hover:border-gold transition-colors" style="width:42px;height:42px;border-radius:50%;font-size:1rem;text-decoration:none" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#0a0805;border-top:1px solid rgba(201,162,39,.12);padding:4rem 0 2rem">
+  <div class="inner max-w-screen-xl mx-auto px-6 md:px-12">
+    <div class="footer-grid grid gap-10 mb-12" style="grid-template-columns:2fr 1fr 1fr 1fr">
+      <div class="footer-brand">
+        <div class="font-serif font-bold text-gold" style="font-size:1.7rem;margin-bottom:1rem">Zaza's<span class="text-cream font-normal"> & Grill</span></div>
+        <p style="font-size:.88rem;color:#9b8c72;line-height:1.75;max-width:260px;margin-bottom:1.5rem">Premium steakhouse dining in the heart of South Trinidad. Halaal certified. Family-friendly. Unforgettable.</p>
+        <div class="flex gap-3">
+          <a href="#" class="glass flex items-center justify-center" style="width:38px;height:38px;border-radius:50%;font-size:.9rem;text-decoration:none">📸</a>
+          <a href="#" class="glass flex items-center justify-center" style="width:38px;height:38px;border-radius:50%;font-size:.9rem;text-decoration:none">📘</a>
+          <a href="https://wa.me/8683554500" class="glass flex items-center justify-center" style="width:38px;height:38px;border-radius:50%;font-size:.9rem;text-decoration:none">💬</a>
+        </div>
+      </div>
+      <div><h4 style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;margin-bottom:1rem">Navigate</h4><div class="flex flex-col gap-2"><a href="#home" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Home</a><a href="#about" style="font-size:.85rem;color:#9b8c72;text-decoration:none">About</a><a href="#menu" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Menu</a><a href="#specials" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Specials</a><a href="#gallery" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Gallery</a></div></div>
+      <div><h4 style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;margin-bottom:1rem">Visit</h4><div class="flex flex-col gap-2"><a href="#reservations" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Reservations</a><a href="#contact" style="font-size:.85rem;color:#9b8c72;text-decoration:none">Location</a><a href="tel:8683554500" style="font-size:.85rem;color:#9b8c72;text-decoration:none">(868) 355-4500</a></div></div>
+      <div><h4 style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:#c9a227;margin-bottom:1rem">Hours</h4><div class="flex flex-col gap-2"><span style="font-size:.85rem;color:#9b8c72">Mon–Thu 10:30–9pm</span><span style="font-size:.85rem;color:#9b8c72">Fri–Sat 10:30–10pm</span><span style="font-size:.85rem;color:#9b8c72">Sun 10:30–8pm</span></div></div>
+    </div>
+    <div style="border-top:1px solid rgba(201,162,39,.1);padding-top:1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+      <p style="font-size:.78rem;color:#9b8c72">© 2025 Zaza's Steakhouse &amp; Grill. La Romain, Trinidad.</p>
+      <span style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:#9b8c72">Fire-Kissed Perfection ✦</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+let isScrolled=false;
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY>60;
+  if(s!==isScrolled){
+    isScrolled=s;
+    if(s){nav.style.cssText='padding:.9rem 2.5rem;background:rgba(10,8,5,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,162,39,.12)'}
+    else{nav.style.cssText='padding:1.4rem 2.5rem;background:transparent'}
+  }
+},{passive:true});
+
+let menuOpen=false;
+const mob=document.getElementById('mobileMenu');
+const h1=document.getElementById('h1'),h2=document.getElementById('h2'),h3=document.getElementById('h3');
+document.getElementById('hamBtn').addEventListener('click',()=>{
+  menuOpen=!menuOpen;
+  mob.style.transform=menuOpen?'translateX(0)':'translateX(100%)';
+  document.body.style.overflow=menuOpen?'hidden':'';
+  h1.style.transform=menuOpen?'rotate(45deg) translate(4px,4px)':'none';
+  h2.style.opacity=menuOpen?'0':'1';
+  h3.style.transform=menuOpen?'rotate(-45deg) translate(4px,-4px)':'none';
+});
+function closeMob(){
+  menuOpen=false;
+  mob.style.transform='translateX(100%)';
+  document.body.style.overflow='';
+  h1.style.transform='none';h2.style.opacity='1';h3.style.transform='none';
+}
+
+const menuData={
+  steaks:[{n:'Tenderloin',p:'$249',d:'Our most premium cut — tender, juicy, and full of flavour.',t:"Chef's Choice",e:'🥩'},{n:'Ribeye',p:'$189',d:'Beautifully marbled ribeye, seared to golden perfection.',t:'Most Popular',e:'🔥'},{n:'Porterhouse',p:'$220',d:'Two steaks in one — striploin and tenderloin separated by bone.',t:'Signature',e:'🥩'},{n:'Beef Ribs',p:'$249',d:'Slow-cooked, fall-off-the-bone beef ribs with smoky depth.',t:'Slow Cooked',e:'🍖'},{n:'T-Bone',p:'$169',d:'Classic T-bone grilled over an open flame.',t:'Classic Cut',e:'🥩'},{n:'Lamb Chop',p:'$249',d:'Herb-seasoned lamb chops grilled to perfection.',t:'Premium',e:'🍖'}],
+  seafood:[{n:'Bajan Mahi Mahi',p:'$149',d:'Fresh Atlantic mahi mahi, Bajan-seasoned and grilled golden.',t:'Fresh Daily',e:'🐟'},{n:'Pink Salmon',p:'$149',d:'Premium pink salmon in our signature Bajan spice blend.',t:'Signature',e:'🐠'},{n:'Snapper',p:'$139',d:'Whole snapper grilled with island spices.',t:'Island Style',e:'🐡'},{n:'Blue Marlin',p:'$129',d:'Firm, meaty marlin steak with perfect grill char.',t:'Caribbean',e:'🐟'},{n:'King Fish',p:'$119',d:'Local king fish, seasoned and grilled.',t:'Local Catch',e:'🐠'},{n:'Grouper',p:'$119',d:'Flaky, tender grouper with our house seasoning.',t:'Fresh',e:'🐡'}],
+  burgers:[{n:"Zaza's Burger",p:'$99',d:'Our legendary house burger — the one that started it all.',t:'Legend',e:'🍔'},{n:'Beef Steak Burger',p:'$90',d:'A proper steak cut between buns.',t:'Premium',e:'🍔'},{n:'Signature Chicken',p:'$65',d:'6 sauces: BBQ, Buffalo, Garlic, Sweet Onion, Jerk, Zaza Hot.',t:'6 Flavours',e:'🍗'},{n:'Bad Habit Burger',p:'$60',d:'The one you\'ll keep coming back for.',t:'Fan Fav',e:'🍔'},{n:'Lamb Burger',p:'$60',d:'Ground lamb patty with our house seasoning.',t:'Unique',e:'🍔'},{n:'Sloppy Joe',p:'$60',d:'Messy, saucy, and absolutely worth it.',t:'Comfort',e:'🍔'}],
+  chicken:[{n:"Zaza's Spicy Chicken",p:'$55',d:'Bold heat, full flavour, perfectly grilled.',t:'House Special',e:'🌶️'},{n:'Honey BBQ Wings',p:'$50',d:'Sweet honey BBQ glaze. Sticky, smoky, addictive.',t:'Fan Fav',e:'🍗'},{n:'Jamaican Jerk Wings',p:'$50',d:'Authentic jerk seasoning, grilled over flame.',t:'Island Vibes',e:'🔥'},{n:'Buffalo Hot Wings',p:'$50',d:'Classic buffalo sauce with perfect tangy heat.',t:'Classic',e:'🌶️'},{n:'Garlic Chicken',p:'$50',d:'Slow-roasted garlic marinade, golden perfection.',t:'Crowd Pleaser',e:'🍗'},{n:'Chicken Strips',p:'$60',d:'Tender strips in 5 sauce options.',t:'5 Sauces',e:'🍗'}],
+  pasta:[{n:'Chicken Alfredo',p:'$75',d:'Creamy house-made alfredo with grilled chicken.',t:'Creamy',e:'🍝'},{n:'Fish Alfredo',p:'$80',d:'Fresh fish in our signature alfredo cream sauce.',t:'Signature',e:'🐟'},{n:'Spaghetti & Meatballs',p:'$70',d:'Rich tomato sauce, handmade meatballs.',t:'Classic',e:'🍝'},{n:'Veggie Alfredo',p:'$65',d:'Garden-fresh vegetables in rich alfredo cream.',t:'Veggie',e:'🌿'}],
+  desserts:[{n:'Brownie Sundae',p:'$55',d:'Warm fudge brownie, vanilla ice cream, chocolate drizzle.',t:'Must Try',e:'🍫'},{n:'Cheesecake',p:'$45',d:'Velvety smooth cheesecake on graham cracker crust.',t:'Classic',e:'🍰'},{n:'Cookie Monster Shake',p:'$45',d:'Blue vanilla shake loaded with cookie crumbles.',t:'Instagram Ready',e:'🥤'},{n:'Soursop Milkshake',p:'$45',d:'Creamy tropical soursop — the most refreshing shake.',t:'Tropical',e:'🥤'},{n:'Julie Mango Smoothie',p:'$35',d:'Pure local Julie mango blended fresh.',t:'Local Fav',e:'🥭'},{n:'Pina Colada',p:'$35',d:'Non-alcoholic coconut pineapple tropical bliss.',t:'Refreshing',e:'🍹'}]
+};
+
+function renderMenu(cat){
+  document.getElementById('menuGrid').innerHTML=menuData[cat].map(d=>`
+    <div class="card-3d overflow-hidden" style="border-radius:12px">
+      <div style="height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#2d1800,#1a0e00);position:relative;overflow:hidden">
+        <span style="font-size:5rem;opacity:.18">${d.e}</span>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to top,#1a1612,transparent)"></div>
+      </div>
+      <div style="padding:1.4rem">
+        <div class="font-serif" style="font-size:1.1rem;font-weight:600;color:#f5ead8;margin-bottom:.35rem">${d.n}</div>
+        <div style="font-size:.83rem;color:#9b8c72;line-height:1.6;margin-bottom:1rem">${d.d}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="font-serif" style="font-size:1.25rem;color:#c9a227;font-weight:700">${d.p}</span>
+          <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#9b8c72;background:rgba(201,162,39,.08);padding:.3rem .75rem;border:1px solid rgba(201,162,39,.18);border-radius:999px">${d.t}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+renderMenu('steaks');
+
+document.getElementById('menuTabs').addEventListener('click',e=>{
+  const t=e.target.closest('.tab-btn');
+  if(!t)return;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  t.classList.add('active');
+  renderMenu(t.dataset.cat);
+});
+
+const revs=[
+  {t:"From the first bite of steak, I knew I'd be returning. The Bajan grilled mahi mahi — you can tell the fish was fresh and the taste was incredible.",a:"Shiva",s:"Google Review"},
+  {t:"Absolutely delicious food, drinks, and desserts with friendly service. The smoothie was so refreshing. Halaal setting made it even more enjoyable.",a:"M Mohammed",s:"Google Review · Local Guide"},
+  {t:"Fantastic establishment, friendly staff and awesome food — all made from scratch. We had a small reunion here and the service was outstanding.",a:"Nasha Nicole",s:"Google Review · Local Guide"},
+  {t:"I love this little restaurant just off bamboo junction. The food is delicious and the ribeye with sautéed mushrooms is absolutely perfect.",a:"Yashiv R",s:"Google Review · Local Guide"},
+  {t:"Way better than any restaurant in south — Hard Rock, TGI, Jaxx — none could compare to the taste and affordability at Zaza's.",a:"Nigel Rajpaulsingh",s:"Google Review · Local Guide"},
+  {t:"Steak was cooked perfectly and everything is delicious. A family favourite. Worth every minute of the wait.",a:"Warren Chanansingh",s:"Google Review · Local Guide"},
+  {t:"The experience was very good. Atmosphere and service was excellent. Made it a very enjoyable birthday evening.",a:"Sofiya Dean",s:"Google Review"},
+  {t:"Great food and friendly staff. They also have a Salaah room which is an added plus!",a:"Asif Khan",s:"Google Review · Local Guide"},
+];
+const tt=document.getElementById('testTrack');
+tt.innerHTML=[...revs,...revs].map(r=>`
+  <div class="test-card-inner" style="border-radius:12px">
+    <div style="font-size:.85rem;letter-spacing:.08em;color:#c9a227;margin-bottom:.8rem">★★★★★</div>
+    <p style="font-size:.88rem;color:#9b8c72;line-height:1.75;margin-bottom:1.3rem;font-style:italic">"${r.t}"</p>
+    <div style="font-weight:600;font-size:.85rem;color:#f5ead8">${r.a}</div>
+    <div style="font-size:.75rem;color:#9b8c72;margin-top:.2rem">${r.s}</div>
+  </div>`).join('');
+
+function checkOpen(){
+  const d=new Date(),day=d.getDay(),h=d.getHours()+d.getMinutes()/60;
+  const close=day===0?20:day>=5?22:21;
+  const open=h>=10.5&&h<close;
+  const el=document.getElementById('openStatus');
+  if(el)el.innerHTML=open?'<span style="color:#4ade80">● Open Now</span>':'<span style="color:#f87171">● Currently Closed</span>';
+}
+checkOpen();
+
+function handleRes(e){
+  e.preventDefault();
+  document.getElementById('resForm').style.display='none';
+  document.getElementById('resConfirm').style.display='block';
+}
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+</script>
+</body>
+</html>
